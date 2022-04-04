@@ -1,0 +1,10 @@
+.App {
+  text-align: center;
+}
+
+div.samples {
+  margin: auto;
+  display: flex;
+  width: 70vw;
+  grid-template-columns: 33% 33% 33%;
+}

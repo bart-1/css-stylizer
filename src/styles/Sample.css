@@ -1,0 +1,10 @@
+* {
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+div.sample {
+    width: 50vw;
+    height: 50vh;
+    padding: 1vw;
+}
