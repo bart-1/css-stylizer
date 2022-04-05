@@ -1,10 +1,18 @@
-* {
-  background-color: var(--color-background);
-  color: var(--color-text);
-}
 
 div.sample {
-    width: 50vw;
-    height: 50vh;
-    padding: 1vw;
+  width: 50vw;
+  height: 50vh;
+  padding: 1vw;
 }
+/* div.samples  {
+  background-color: var(--color-background-s1);
+  color: var(--color-text-s1);
+}
+div.samples :nth-child(2) {
+  background-color: var(--color-background-s2);
+  color: var(--color-text-s2);
+}
+div.samples :nth-child(3) {
+  background-color: var(--color-background-s3);
+  color: var(--color-text-s3);
+} */

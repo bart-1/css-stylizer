@@ -3,8 +3,18 @@
 }
 
 div.samples {
-  margin: auto;
+  margin: 2vh auto;
   display: flex;
+  gap: 1vw;
   width: 70vw;
   grid-template-columns: 33% 33% 33%;
+}
+
+div.sample-set {
+  display: flex;
+  flex-direction: column;
+  padding: 1vw;
+  /* border: 1px solid black; */
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }

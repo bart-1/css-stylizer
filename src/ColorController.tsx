@@ -1,8 +1,9 @@
-import react from "react";
+import react, { useEffect, useState } from "react";
 
 interface ColorControllerProps {
+  name: string;
   inputColor: any;
-  outputColor: any;
+  outputColor: (color:any)=> void;
   colorDataType: "rgba" | "hsla" | "hexa";
 }
 
@@ -11,6 +12,20 @@ const ColorController = ({
   outputColor,
   colorDataType,
 }: ColorControllerProps) => {
+  const [r, setR] = useState(0);
+  const [g, setG] = useState(0);
+  const [b, setB] = useState(0);
+
+  useEffect(() => {
+    if (colorDataType === 'rgba')
+      inputColor
+    else if (colorDataType === 'hsla')
+      inputColor
+    else if (colorDataType === "hexa")
+      inputColor
+  },[colorDataType])
+
+  
   return (
     <>
       <div className="color-controller">
