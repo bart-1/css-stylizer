@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import { CssDataSet } from './App';
 import ColorController from './ColorController';
+import './styles/ControlPanel.css';
 
 interface ControlPanelProps {
     sampleName: string;

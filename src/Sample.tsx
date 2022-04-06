@@ -2,15 +2,15 @@ import react from 'react';
 import './styles/Sample.css';
 
 interface SampleProps {
-   className: string
+   sampleID: string
 }
 
-const Sample = ({ className }: SampleProps) => {
+const Sample = ({ sampleID }: SampleProps) => {
      
         return (
             <>
-                <div className={className}>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, sint in consectetur nobis fugit non repellendus, nostrum eveniet accusamus amet fugiat ullam nam adipisci accusantium, mollitia nemo eos. Adipisci, quos.</p>
+                <div className="sample" id={sampleID} >
+                <p className='sample'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, sint in consectetur nobis fugit non repellendus, nostrum eveniet accusamus amet fugiat ullam nam adipisci accusantium, mollitia nemo eos. Adipisci, quos.</p>
                 </div>
             </>
         )

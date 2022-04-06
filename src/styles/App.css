@@ -1,6 +1,8 @@
+
 .App {
   text-align: center;
 }
+
 
 div.samples {
   margin: 2vh auto;
@@ -17,4 +19,20 @@ div.sample-set {
   /* border: 1px solid black; */
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+@media screen and (max-width: 1000px) {
+  div.samples {
+    margin: 2vh auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    width: 70vw;
+  }
+  div.sample-set {
+    display: flex;
+    flex-direction: row;
+    padding: 1vw;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
 }

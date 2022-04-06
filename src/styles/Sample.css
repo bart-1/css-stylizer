@@ -1,8 +1,24 @@
 
 div.sample {
-  width: 50vw;
-  height: 50vh;
+  width: auto;
+  height: fit-content;
   padding: 1vw;
+}
+
+p.sample {
+  font-size: small;
+}
+@media screen and (max-width: 1000px) {
+  div.sample {
+    width: 70%;
+    height: fit-content;
+    padding: 1vw;
+  }
+  
+  p.sample {
+    font-size: small;
+  }
+  
 }
 /* div.samples  {
   background-color: var(--color-background-s1);

@@ -22,7 +22,7 @@ function App() {
 
   const samplesSet = numberOfSamples.map((sample) => (
     <div className="sample-set">
-      <Sample className={`sample${sample}`} />
+      <Sample sampleID={`sample${sample}`} />
       <ControlPanel
         sampleName={`sample${sample}`}
         exportData={(data) =>

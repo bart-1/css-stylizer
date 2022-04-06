@@ -1,0 +1,22 @@
+
+div.control-panel {
+    display: flex;
+    gap:1vw;
+    grid-template-columns: 50% 50%;
+    margin-top: 3vh;
+    background-color: rgb(206, 204, 204);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+@media screen and (max-width: 1000px) {
+ div.control-panel {
+    display: flex;
+    gap:1vw;
+    grid-template-columns: 50% 50%;
+    margin-top: 0;
+    background-color: rgb(206, 204, 204);
+    padding: 5px;
+    border-radius: 5px;
+}
+}
