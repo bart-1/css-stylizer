@@ -43,7 +43,19 @@ input[type="range"]:focus {
   outline: none;
 }
 
+input[type="number"] {
+  width: 20px;
+  margin: 0;
+  padding: 0;
+  font-size: x-small;
+}
 /* chrome */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  text-align: center;
+}
 input[type="range"] {
   -webkit-appearance: none;
 }
@@ -76,6 +88,10 @@ input[type="range"]::-webkit-slider-thumb {
 } */
 
 /* Firefox */
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
 input[type="range"]::-moz-range-track {
   width: 100%;
   height: 5px;

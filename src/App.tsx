@@ -20,8 +20,8 @@ function App() {
     },
   ]);
 
-  const samplesSet = numberOfSamples.map((sample) => (
-    <div className="sample-set">
+  const samplesSet = numberOfSamples.map((sample, index) => (
+    <div className="sample-set" key={sample}>
       <Sample sampleID={`sample${sample}`} />
       <ControlPanel
         sampleName={`sample${sample}`}
