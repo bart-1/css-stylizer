@@ -1,4 +1,4 @@
-import { objectRgba } from "./colorObjectsInterfaces";
+import { ObjectRgba } from "./colorObjectsInterfaces";
 
 function validateHexaString(stringHexa: string, hexRegex: RegExp) {
     return stringHexa.search(hexRegex);
@@ -6,10 +6,10 @@ function validateHexaString(stringHexa: string, hexRegex: RegExp) {
 
 /**
  *@param {String} hexa color as hex string (with alpha too)
- *@return {objectRgba} color as objectRgba
+ *@return {ObjectRgba} color as objectRgba
  */
 
-export function hexaStringToRgbaObject (hexa: string): objectRgba {
+export function hexaStringToRgbaObject (hexa: string): ObjectRgba {
     const hexRegex = /^#([\da-f]{3}){1,2}$/i;
     const hexaRegex = /^#([\da-f]{4}){1,2}$/i;
     let r = 0,

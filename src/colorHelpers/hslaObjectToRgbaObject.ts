@@ -1,4 +1,4 @@
-import { objectHsla, objectRgba } from "./colorObjectsInterfaces";
+import { ObjectHsla, ObjectRgba } from "./colorObjectsInterfaces";
 
 function validateColorParameters(
     param: number,
@@ -12,11 +12,11 @@ function validateColorParameters(
 
 /**
  *
- *@param {objectHsla} colorHsla color as objectHsla
- *@return {objectRgba} color as RGBA object
+ *@param {ObjectHsla} colorHsla color as objectHsla
+ *@return {ObjectRgba} color as RGBA object
  */
 
-export function hslaObjectToRgbaObject(colorHsla: objectHsla): objectRgba {
+export function hslaObjectToRgbaObject(colorHsla: ObjectHsla): ObjectRgba {
     let { h, s, l, a } = colorHsla;
 
     if (0 > h || h >= 360) h = Math.abs(h) % 360;

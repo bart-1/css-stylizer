@@ -1,11 +1,11 @@
-import { objectRgba } from "./colorObjectsInterfaces";
+import { ObjectRgba } from "./colorObjectsInterfaces";
 
 /**
- *@param {objectRgba} colorRgba color as objectRgba
+ *@param {ObjectRgba} colorRgba color as objectRgba
  *@return {string} color as hex string (with alpha)
  */
 
-export function rgbaObjectToHexaString(colorRgba: objectRgba): string {
+export function rgbaObjectToHexaString(colorRgba: ObjectRgba): string {
     const { r, g, b, a } = colorRgba;
 
     function prepareHex(n: number) {
