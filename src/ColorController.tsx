@@ -113,17 +113,27 @@ const ColorController = ({
     <>
       <div className="color-controller">
         <div className="color-controller-title">{name}</div>
-        {colorDataType === "rgba" && inputGenerator("rgba")}
-
-        {colorDataType === "hsla" && inputGenerator("hsla")}
-
-        {colorDataType === "hexa" && (
+        {colorDataType === "rgba" && (
           <>
+            {inputGenerator("rgba")}
+          </>
+        )}
+
+        {colorDataType === "hsla" && (
+          <>
+            {inputGenerator("hsla")}
+          </>
+        )}
+
+      {colorDataType === "hexa" && (
+        <>
             <label htmlFor="hex">
-              HEX
+              #
               <input
                 type="text"
                 name="hex"
+                minLength={6}
+                maxLength={6}
                 onChange={(e) => handleInput(e)}
                 value={hex}
               />
@@ -139,8 +149,8 @@ const ColorController = ({
                 value={a}
               />
             </label>
-          </>
-        )}
+        </>
+      )}
       </div>
     </>
   );
