@@ -1,22 +1,28 @@
-
 div.control-panel {
+  display: flex;
+  gap: 1vw;
+  margin-top: 3vh;
+  background-color: rgb(206, 204, 204);
+  padding: 1vh 1vw;
+  border-radius: 5px;
+  width: fit-content;
+}
+/* 
+div.control-panel-hexa {
     display: flex;
-    gap:1vw;
-    grid-template-columns: 50% 50%;
-    margin-top: 3vh;
+    gap: 1vw;
     background-color: rgb(206, 204, 204);
     padding: 5px;
     border-radius: 5px;
-}
+} */
 
 @media screen and (max-width: 1000px) {
- div.control-panel {
+  div.control-panel {
     display: flex;
-    gap:1vw;
-    grid-template-columns: 50% 50%;
+    gap: 1vw;
     margin-top: 0;
     background-color: rgb(206, 204, 204);
     padding: 5px;
     border-radius: 5px;
-}
+  }
 }

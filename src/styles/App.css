@@ -1,8 +1,6 @@
-
 .App {
   text-align: center;
 }
-
 
 div.samples {
   margin: 2vh auto;
@@ -15,8 +13,8 @@ div.samples {
 div.sample-set {
   display: flex;
   flex-direction: column;
+  min-width: 33%;
   padding: 1vw;
-  /* border: 1px solid black; */
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }

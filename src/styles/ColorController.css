@@ -1,34 +1,41 @@
-div.color-controller {
-  display: flex;
-  flex-direction: column;
+* {
   --range-input-background: none;
   --range-input-active-track: rgb(46, 46, 46);
   --range-input-inactive-track: gray;
   --range-input-thumb: orangered;
 }
+div.color-controller {
+  display: flex;
+  flex-direction: column;
+}
 
 div.color-controller > label {
   display: flex;
-  gap: 1vw;
+  gap: 0.5vw;
   font-size: smaller;
   align-items: center;
 }
 
 div.color-controller-title {
-    font-size: smaller;
+  font-size: smaller;
+  margin-bottom: 1vh;
+}
+
+input[name='hex'] {
+  width: 100%;
+  text-align: center;
 }
 
 @media screen and (max-width: 1000px) {
-    div.color-controller-title {
-        font-size:x-small;
-    }
-    div.color-controller > label {
-      display: flex;
-      gap: 1vw;
-      font-size: x-small;
-      align-items: center;
-    }
-    
+  div.color-controller-title {
+    font-size: x-small;
+  }
+  div.color-controller > label {
+    display: flex;
+    gap: 1vw;
+    font-size: x-small;
+    align-items: center;
+  }
 }
 
 /* range input */
@@ -60,16 +67,16 @@ input[type="range"] {
   -webkit-appearance: none;
 }
 input[type="range"]::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 5px;
-    cursor: pointer;
-    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-    background: var(--range-input-inactive-track);
-    border-radius: 1.3px;
-    border: 0.2px solid #010101;
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: var(--range-input-inactive-track);
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
 }
 input[type="range"]::-webkit-progress-value {
-    background-color: var(--range-input-active-track);
+  background-color: var(--range-input-active-track);
 }
 
 input[type="range"]::-webkit-slider-thumb {
@@ -116,27 +123,33 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /**Edge */
-@supports (-ms-track:auto) {input[type="range"] {
-  width: 100%;
-  height: 5px;
-  cursor: pointer;
-  background: transparent;
-  border-color: transparent;
-  border-width: 16px 0;
-  color: transparent;
-}}
-@supports (-ms-fill-lower:none) {input[type="range"] {
-  background: var(--range-input-active-track);
-  border: 0.2px solid #010101;
-  border-radius: 2.6px;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-}}
-@supports (-ms-fill-upper:auto) {input[type="range"] {
- background: var(--range-input-inactive-track);
-  border: 0.2px solid #010101;
-  border-radius: 2.6px;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-}}
+@supports (-ms-track: auto) {
+  input[type="range"] {
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    background: transparent;
+    border-color: transparent;
+    border-width: 16px 0;
+    color: transparent;
+  }
+}
+@supports (-ms-fill-lower: none) {
+  input[type="range"] {
+    background: var(--range-input-active-track);
+    border: 0.2px solid #010101;
+    border-radius: 2.6px;
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  }
+}
+@supports (-ms-fill-upper: auto) {
+  input[type="range"] {
+    background: var(--range-input-inactive-track);
+    border: 0.2px solid #010101;
+    border-radius: 2.6px;
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  }
+}
 /* IE */
 input[type="range"]::-ms-track {
   width: 100%;
