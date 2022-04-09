@@ -1,17 +1,18 @@
-import react, {
-  FormEvent,
-  InputHTMLAttributes,
-  SyntheticEvent,
-  useEffect,
-  useState,
-} from "react";
+import react, { FormEvent, useEffect, useState } from "react";
+import {
+  ObjectRgba,
+  ObjectHsla,
+  ObjectHexa,
+} from "./colorHelpers/colorObjectsInterfaces";
 import "./styles/ColorController.css";
+
+export type ColorDataType = "rgba" | "hsla" | "hexa";
 
 interface ColorControllerProps {
   name: string;
   inputColor: any;
   outputColor: (color: any) => void;
-  colorDataType: "rgba" | "hsla" | "hexa";
+  colorDataType: ColorDataType;
 }
 
 type InputList = {
@@ -46,13 +47,25 @@ const ColorController = ({
   const [l, setL] = useState(0);
   const [a, setA] = useState(0);
   const [hex, setHEX] = useState("");
-  const [hexA, setHEXA] = useState("");
+  const [rgba, setRgba] = useState<ObjectRgba>({ r: 0, g: 0, b: 0, a: 100 });
+  const [hsla, setHsla] = useState<ObjectHsla>({ h: 0, s: 100, l: 0, a: 100 });
+  const [hexa, setHexa] = useState<ObjectHexa>({ hexa: "" });
 
   useEffect(() => {
     if (colorDataType === "rgba") inputColor;
     else if (colorDataType === "hsla") inputColor;
     else if (colorDataType === "hexa") inputColor;
   }, [colorDataType]);
+
+  useEffect(() => {
+    setRgba({ r: r, g: g, b: b, a: a });
+  }, [r, g, b, a]);
+  useEffect(() => {
+    setHsla({ h: h, s: s, l: l, a: a });
+  }, [h, s, l, a]);
+  useEffect(() => {
+    setHexa({ hexa: "#" + hex + a.toString(16) });
+  }, [hex, a]);
 
   const handleInput = (e: FormEvent<HTMLInputElement>) => {
     if (e.currentTarget)
@@ -118,10 +131,12 @@ const ColorController = ({
             <label htmlFor="ahex">
               A
               <input
-                type="text"
-                name="ahex"
+                type="range"
+                name="a"
+                min={0}
+                max={100}
                 onChange={(e) => handleInput(e)}
-                value={hexA}
+                value={a}
               />
             </label>
           </>

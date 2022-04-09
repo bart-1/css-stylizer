@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import { CssDataSet } from './App';
-import ColorController from './ColorController';
+import ColorController, {ColorDataType} from './ColorController';
 import './styles/ControlPanel.css';
 
 interface ControlPanelProps {
@@ -23,13 +23,13 @@ const ControlPanel = ({ sampleName, exportData }: ControlPanelProps) => {
                 name="text"
                 inputColor={""}
                 outputColor={(color) => setTextColor(color)}
-                colorDataType={"rgba"}
+                colorDataType={'rgba'}
               />
               <ColorController
                 name="background"
                 inputColor={""}
                 outputColor={(color) => setBgColor(color)}
-                colorDataType={"rgba"}
+                colorDataType={'rgba'}
               />
             </div>
           </>

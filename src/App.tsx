@@ -5,6 +5,7 @@ import Sample from "./Sample";
 
 const numberOfSamples = [1, 2, 3];
 
+
 export interface CssDataSet {
   id: string;
   colorTxt: string;
