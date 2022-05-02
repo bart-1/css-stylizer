@@ -1,53 +1,33 @@
-import { useEffect, useState } from "react";
 import "./styles/App.css";
 import ControlPanel from "./ControlPanel";
 import Sample from "./Sample";
-import { ColorDataType } from "./ColorController";
+import { ColorModeType } from "./ColorController";
 
-type Targets = 'bodyText' | 'background' | 'windowBackground' | 'windowTitle' | 'windowHeaderBackground' | 'windowText';
-type SamplesSetup = { id: number, targets: Targets[], colorModel: ColorDataType };
+type CSSTargets = "color" | "background-color";
+type SamplesSetup = {
+  id: number;
+  CSSTargets: CSSTargets[];
+  colorModel: ColorModeType;
+};
 
-export interface CssDataSet {
-  id: string;
-  colorTxt: string;
-  colorBg: string;
-}
 const samplesSetup: SamplesSetup[] = [
-  { id: 1, targets: ["bodyText", "background"], colorModel: "rgba" },
-  { id: 2, targets: ["bodyText", "background"], colorModel: "hsla" },
-  { id: 3, targets: ["bodyText", "background"], colorModel: "hexa" },
+  { id: 1, CSSTargets: ["color", "background-color"], colorModel: "rgba" },
+  { id: 2, CSSTargets: ["color", "background-color"], colorModel: "hsla" },
+  { id: 3, CSSTargets: ["color", "background-color"], colorModel: "hexa" },
 ];
 
 function App() {
-  const [cssDataSet, setCssDataSet] = useState<CssDataSet[]>([
-    {
-      id: "test",
-      colorTxt: "black",
-      colorBg: "gray",
-    },
-  ]);
 
   const samplesSet = samplesSetup.map((sample) => (
     <div className="sample-set" key={sample.id}>
-      <Sample sampleID={`sample${sample}`} />
+      <Sample sampleID={`sample${sample.id}`} />
       <ControlPanel
-        sampleName={`sample${sample.id}`}
-        exportData={(data) =>
-          setCssDataSet((prevState) => prevState.concat(data))
-        }
+        sampleID={`sample${sample.id}`}
         colorModel={sample.colorModel}
-        targets={sample.targets}
+        CSSTargets={sample.CSSTargets}
       />
     </div>
   ));
-
-  useEffect(() => {
-    cssDataSet.forEach((cssData) => {
-      const cssNest = document.getElementById(`${cssData.id}`);
-      if (cssNest)
-        cssNest.style.cssText = `color: ${cssData.colorTxt}; background-color: ${cssData.colorBg}`;
-    });
-  }, [cssDataSet]);
 
   return (
     <>

@@ -1,35 +1,67 @@
-import { useEffect, useState } from "react";
-import { CssDataSet } from "./App";
-import ColorController, { ColorDataType } from "./ColorController";
+import { useEffect, useLayoutEffect, useState } from "react";
+import ColorController, {
+  ColorModeType,
+  OutputColorData,
+} from "./ColorController";
 import "./styles/ControlPanel.css";
 
+type ControllerOutput = {
+  target: string;
+  value: OutputColorData;
+  otherParams?: { colorMode: ColorModeType };
+};
+
 interface ControlPanelProps {
-  sampleName: string;
-  exportData: (data: CssDataSet) => void;
-  colorModel: ColorDataType;
-  targets: string[];
+  sampleID: string;
+  colorModel: ColorModeType;
+  CSSTargets: string[];
 }
 
 const ControlPanel = ({
-  sampleName,
-  exportData,
+  sampleID,
   colorModel,
-  targets,
+  CSSTargets,
 }: ControlPanelProps) => {
-  const [textColor, setTextColor] = useState("");
-  const [bgColor, setBgColor] = useState("");
+  const [controllersData, setControllersData] = useState<ControllerOutput[]>([
+    {
+      target: "color",
+      value: "rgba(0, 0, 0, 100)",
+      otherParams: { colorMode: "rgba" },
+    },
+    {
+      target: "background-color",
+      value: "rgba(255, 255, 255, 100",
+      otherParams: { colorMode: "rgba" },
+    },
+  ]);
 
   useEffect(() => {
-    exportData({ id: sampleName, colorTxt: textColor, colorBg: bgColor });
-  }, []);
+    const cssEl = document.getElementById("txt" + sampleID);
+    const stateToString = controllersData.map((element) => {
+      return `${element.target}: ${element.value};`;
+    });
+    const cssString = stateToString.join(" ");
+    cssEl && (cssEl.style.cssText = cssString);
+  }, [controllersData]);
 
-  const colorsControllers = targets.map((target) => (
-      <ColorController
-        name={target}
-        inputColor={""}
-        outputColor={(color) => setTextColor(color)}
-        colorDataType={colorModel}
-      />
+  const check = (outputColor: OutputColorData, target: string) => {
+    const isTarget = controllersData.map((element) => {
+      if (element.target === target && element.value !== outputColor)
+        element.value = outputColor;
+      return element;
+    });
+    setControllersData(isTarget);
+  };
+
+  const colorsControllers = CSSTargets.map((target) => (
+    <ColorController
+      key={target + sampleID}
+      targetID={sampleID}
+      name={target}
+      inputColor={target === "color" ? "black" : "white"}
+      outputColor={(outputColor) => check(outputColor, target)}
+      colorDataType={colorModel}
+    />
   ));
 
   return (

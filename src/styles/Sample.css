@@ -3,6 +3,7 @@ div.sample {
   width: auto;
   height: fit-content;
   padding: 1vw;
+  border-radius: 10px;
 }
 
 p.sample {

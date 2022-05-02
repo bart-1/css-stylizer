@@ -1,4 +1,4 @@
-import react, { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import {
   ObjectRgba,
   ObjectHsla,
@@ -6,13 +6,15 @@ import {
 } from "./colorHelpers/colorObjectsInterfaces";
 import "./styles/ColorController.css";
 
-export type ColorDataType = "rgba" | "hsla" | "hexa";
+export type ColorModeType = "rgba" | "hsla" | "hexa";
+export type OutputColorData = ObjectHexa | ObjectHsla | ObjectRgba | string;
 
 interface ColorControllerProps {
   name: string;
-  inputColor: any;
-  outputColor: (color: any) => void;
-  colorDataType: ColorDataType;
+  inputColor: string;
+  colorDataType: ColorModeType;
+  targetID: string;
+  outputColor: (outputColor: OutputColorData) => void;
 }
 
 type InputList = {
@@ -35,37 +37,51 @@ const inputsList = [
 
 const ColorController = ({
   name,
-  inputColor = "rgba",
+  inputColor,
+  targetID,
   outputColor,
-  colorDataType,
+  colorDataType = "rgba",
 }: ColorControllerProps) => {
   const [r, setR] = useState(0);
   const [g, setG] = useState(0);
   const [b, setB] = useState(0);
   const [h, setH] = useState(0);
-  const [s, setS] = useState(0);
+  const [s, setS] = useState(100);
   const [l, setL] = useState(0);
-  const [a, setA] = useState(0);
-  const [hex, setHEX] = useState("");
-  const [rgba, setRgba] = useState<ObjectRgba>({ r: 0, g: 0, b: 0, a: 100 });
-  const [hsla, setHsla] = useState<ObjectHsla>({ h: 0, s: 100, l: 0, a: 100 });
-  const [hexa, setHexa] = useState<ObjectHexa>({ hexa: "" });
+  const [a, setA] = useState(100);
+  const [hex, setHEX] = useState("000000");
 
   useEffect(() => {
-    if (colorDataType === "rgba") inputColor;
-    else if (colorDataType === "hsla") inputColor;
-    else if (colorDataType === "hexa") inputColor;
-  }, [colorDataType]);
+    if (inputColor === "white") {
+      setR(255);
+      setG(255);
+      setB(255);
+      setS(100);
+      setL(100);
+      setHEX("ffffff");
+    }
+  }, []);
 
   useEffect(() => {
-    setRgba({ r: r, g: g, b: b, a: a });
+    colorDataType === "rgba" &&
+      outputColor(`rgba(${r}, ${g}, ${b}, ${a / 100})`);
   }, [r, g, b, a]);
+
   useEffect(() => {
-    setHsla({ h: h, s: s, l: l, a: a });
+    colorDataType === "hsla" &&
+      outputColor(`hsl(${h}, ${s}%, ${l}%, ${a / 100})`);
   }, [h, s, l, a]);
+
   useEffect(() => {
-    setHexa({ hexa: "#" + hex + a.toString(16) });
+    colorDataType === "hexa" &&
+      outputColor(`#${hex.toUpperCase()}${alphaToHex(a)}`);
   }, [hex, a]);
+
+  const alphaToHex = (a: number) => {
+    const intValue = Math.round((a / 100) * 255);
+    const hexValue = intValue.toString(16);
+    return hexValue.padStart(2, "0");
+  };
 
   const handleInput = (e: FormEvent<HTMLInputElement>) => {
     if (e.currentTarget)
@@ -73,20 +89,20 @@ const ColorController = ({
   };
 
   const inputGenerator = (inputOption: string) => {
-    let inputsCutedList: InputList = [];
+    let inputsFilteredList: InputList = [];
 
     if (inputOption === "rgba") {
-      inputsCutedList = inputsList.filter(
+      inputsFilteredList = inputsList.filter(
         (inp) => inp.color === "rgb" || inp.color === "a"
       );
     } else if (inputOption === "hsla") {
-      inputsCutedList = inputsList.filter(
+      inputsFilteredList = inputsList.filter(
         (inp) => inp.color === "hsl" || inp.color === "a"
       );
     } else return null;
 
-    if (inputsCutedList)
-      return inputsCutedList.map((inp, index) => (
+    if (inputsFilteredList)
+      return inputsFilteredList.map((inp, index) => (
         <label key={inp.id} htmlFor={inp.name}>
           {inp.name.toUpperCase()}
           <input
@@ -113,20 +129,12 @@ const ColorController = ({
     <>
       <div className="color-controller">
         <div className="color-controller-title">{name}</div>
-        {colorDataType === "rgba" && (
-          <>
-            {inputGenerator("rgba")}
-          </>
-        )}
+        {colorDataType === "rgba" && <>{inputGenerator("rgba")}</>}
 
-        {colorDataType === "hsla" && (
-          <>
-            {inputGenerator("hsla")}
-          </>
-        )}
+        {colorDataType === "hsla" && <>{inputGenerator("hsla")}</>}
 
-      {colorDataType === "hexa" && (
-        <>
+        {colorDataType === "hexa" && (
+          <>
             <label htmlFor="hex">
               #
               <input
@@ -138,7 +146,7 @@ const ColorController = ({
                 value={hex}
               />
             </label>
-            <label htmlFor="ahex">
+            <label htmlFor="a">
               A
               <input
                 type="range"
@@ -148,9 +156,16 @@ const ColorController = ({
                 onChange={(e) => handleInput(e)}
                 value={a}
               />
+              <input
+                type="number"
+                min={0}
+                max={100}
+                onChange={(e) => handleInput(e)}
+                value={a}
+              />
             </label>
-        </>
-      )}
+          </>
+        )}
       </div>
     </>
   );
