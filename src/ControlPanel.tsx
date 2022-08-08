@@ -1,66 +1,71 @@
-import { useEffect, useLayoutEffect, useState } from "react";
-import ColorController, {
+import { useEffect, useState } from "react";
+import ColorController from "./ColorController";
+import {
+  ObjectRgba,
+} from "./colorHelpers/colorObjectsInterfaces";
+import {
   ColorModeType,
+  ControllerDataPack,
+  cssUpdate,
+  initialControllerDataPack,
   OutputColorData,
-} from "./ColorController";
+} from "./appLibrary";
 import "./styles/ControlPanel.css";
 
-type ControllerOutput = {
-  target: string;
-  value: OutputColorData;
-  otherParams?: { colorMode: ColorModeType };
+
+
+const controllerStateToCssString = (controllerDataPack: ControllerDataPack[]) => {
+  const preparedPack = controllerDataPack.map((element) => {
+    return `${element.target}: rgba(${element.value.r}, ${element.value.g}, ${element.value.b}, ${element.value.a/100});`;
+  });
+  return preparedPack.join(" ");
 };
 
-interface ControlPanelProps {
+interface ControllPanelProps {
   sampleID: string;
   colorModel: ColorModeType;
   CSSTargets: string[];
+  initialColorData: { [key: string]: OutputColorData };
 }
 
 const ControlPanel = ({
   sampleID,
   colorModel,
   CSSTargets,
-}: ControlPanelProps) => {
-  const [controllersData, setControllersData] = useState<ControllerOutput[]>([
-    {
-      target: "color",
-      value: "rgba(0, 0, 0, 100)",
-      otherParams: { colorMode: "rgba" },
-    },
-    {
-      target: "background-color",
-      value: "rgba(255, 255, 255, 100",
-      otherParams: { colorMode: "rgba" },
-    },
-  ]);
+  initialColorData,
+}: ControllPanelProps) => {
+  const [controllerDataPack, setControllerDataPack] = useState<
+    ControllerDataPack[]
+    >(initialControllerDataPack);
+  
+ const [colorOutput, setColorOutput] = useState({r:0, g:0, b:0, a:100});
 
-  useEffect(() => {
-    const cssEl = document.getElementById("txt" + sampleID);
-    const stateToString = controllersData.map((element) => {
-      return `${element.target}: ${element.value};`;
-    });
-    const cssString = stateToString.join(" ");
-    cssEl && (cssEl.style.cssText = cssString);
-  }, [controllersData]);
-
-  const check = (outputColor: OutputColorData, target: string) => {
-    const isTarget = controllersData.map((element) => {
-      if (element.target === target && element.value !== outputColor)
-        element.value = outputColor;
+  
+  const handleOutput = (outputColor: ObjectRgba, target: string, sampleID: string) => {
+    const isTarget = controllerDataPack.map((element) => {
+      if (element.target === target)
+      element.value = outputColor;
       return element;
     });
-    setControllersData(isTarget);
+    
+    const cssString = controllerStateToCssString(isTarget);
+    const cssElID = "txt" + sampleID;
+    cssUpdate(cssString, cssElID);
+    
   };
+  
+  
 
   const colorsControllers = CSSTargets.map((target) => (
     <ColorController
       key={target + sampleID}
       targetID={sampleID}
       name={target}
-      inputColor={target === "color" ? "black" : "white"}
-      outputColor={(outputColor) => check(outputColor, target)}
-      colorDataType={colorModel}
+      initialColorData={target === 'color' && initialColorData.color || target === 'background-color' && initialColorData.background || '00000000FF'}
+      outputColor={(outputColor) => {
+        handleOutput(outputColor, target, sampleID)
+      }}
+      initialColorModel={colorModel}
     />
   ));
 

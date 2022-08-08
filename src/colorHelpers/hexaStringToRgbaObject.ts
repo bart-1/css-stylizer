@@ -21,13 +21,13 @@ export function hexaStringToRgbaObject (hexa: string): ObjectRgba {
         r = Number("0x" + hexa[1] + hexa[2]);
         g = Number("0x" + hexa[3] + hexa[4]);
         b = Number("0x" + hexa[5] + hexa[6]);
-        // a = (Number("0x" + hexa[7] + hexa[8]) * 100) / 255;
         a = 100;
     } else if (validateHexaString(hexa, hexaRegex) !== -1) {
         r = Number("0x" + hexa[1] + hexa[2]);
         g = Number("0x" + hexa[3] + hexa[4]);
         b = Number("0x" + hexa[5] + hexa[6]);
-        a = 100;
+        a = (Number("0x" + hexa[7] + hexa[8]) * 100) / 255;
+        // a = 100;
     } else {
         return { r: 0, g: 0, b: 0, a: 100 };
     }

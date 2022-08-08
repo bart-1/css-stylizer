@@ -9,11 +9,12 @@ div.sample {
 p.sample {
   font-size: small;
 }
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1400px) {
   div.sample {
-    width: 70%;
+    width: 60%;
     height: fit-content;
     padding: 1vw;
+    margin-right: 10px;
   }
   
   p.sample {
@@ -21,15 +22,16 @@ p.sample {
   }
   
 }
-/* div.samples  {
-  background-color: var(--color-background-s1);
-  color: var(--color-text-s1);
+@media screen and (max-width: 800px) {
+  div.sample {
+    width: auto;
+    height: fit-content;
+    padding: 1vw;
+    margin-right: 10px;
+  }
+  
+  p.sample {
+    font-size: small;
+  }
+  
 }
-div.samples :nth-child(2) {
-  background-color: var(--color-background-s2);
-  color: var(--color-text-s2);
-}
-div.samples :nth-child(3) {
-  background-color: var(--color-background-s3);
-  color: var(--color-text-s3);
-} */

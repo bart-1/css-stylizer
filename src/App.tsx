@@ -1,20 +1,9 @@
 import "./styles/App.css";
 import ControlPanel from "./ControlPanel";
 import Sample from "./Sample";
-import { ColorModeType } from "./ColorController";
+import { samplesSetup } from "./appLibrary";
 
-type CSSTargets = "color" | "background-color";
-type SamplesSetup = {
-  id: number;
-  CSSTargets: CSSTargets[];
-  colorModel: ColorModeType;
-};
 
-const samplesSetup: SamplesSetup[] = [
-  { id: 1, CSSTargets: ["color", "background-color"], colorModel: "rgba" },
-  { id: 2, CSSTargets: ["color", "background-color"], colorModel: "hsla" },
-  { id: 3, CSSTargets: ["color", "background-color"], colorModel: "hexa" },
-];
 
 function App() {
 
@@ -25,6 +14,7 @@ function App() {
         sampleID={`sample${sample.id}`}
         colorModel={sample.colorModel}
         CSSTargets={sample.CSSTargets}
+        initialColorData={sample.initialValues}
       />
     </div>
   ));

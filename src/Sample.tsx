@@ -13,7 +13,13 @@ const Sample = ({ sampleID }: SampleProps) => {
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, sint
           in consectetur nobis fugit non repellendus, nostrum eveniet accusamus
           amet fugiat ullam nam adipisci accusantium, mollitia nemo eos.
-          Adipisci, quos.
+          Adipisci, quos. Lorem ipsum dolor sit amet consectetur adipisicing
+          elit. Quaerat, sint in consectetur nobis fugit non repellendus,
+          nostrum eveniet accusamus amet fugiat ullam nam adipisci accusantium,
+          mollitia nemo eos. Adipisci, quos. Lorem ipsum dolor sit amet
+          consectetur adipisicing elit. Quaerat, sint in consectetur nobis fugit
+          non repellendus, nostrum eveniet accusamus amet fugiat ullam nam
+          adipisci accusantium, mollitia nemo eos. Adipisci, quos.
         </p>
       </div>
     </>

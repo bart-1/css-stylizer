@@ -7,16 +7,29 @@
 div.color-controller {
   display: flex;
   flex-direction: column;
+  padding: 1px;
+  max-width: 50%;
 }
 
 div.color-controller > label {
   display: flex;
-  gap: 0.5vw;
-  font-size: smaller;
+  flex-direction: row;
+  font-size: x-small;
+  align-items: center;
+}
+div.color-controller-inputs-set{
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  font-size: x-small;
   align-items: center;
 }
 
 div.color-controller-title {
+  font-size: smaller;
+  margin-bottom: 1vh;
+}
+legend.color-controller-legend {
   font-size: smaller;
   margin-bottom: 1vh;
 }
@@ -26,7 +39,7 @@ input[name='hex'] {
   text-align: center;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1400px) {
   div.color-controller-title {
     font-size: x-small;
   }
@@ -37,6 +50,9 @@ input[name='hex'] {
     align-items: center;
   }
 }
+
+
+
 
 /* range input */
 

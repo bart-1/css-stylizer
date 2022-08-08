@@ -1,46 +1,33 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useLayoutEffect, useState } from "react";
 import {
-  ObjectRgba,
-  ObjectHsla,
-  ObjectHexa,
-} from "./colorHelpers/colorObjectsInterfaces";
+  ColorModeType,
+  InputList,
+  inputsList,
+  otherColorsToObjectRGBA,
+  OutputColorData,
+} from "./appLibrary";
 import "./styles/ColorController.css";
-
-export type ColorModeType = "rgba" | "hsla" | "hexa";
-export type OutputColorData = ObjectHexa | ObjectHsla | ObjectRgba | string;
+import { ObjectHsla, ObjectRgba } from "./colorHelpers/colorObjectsInterfaces";
+import { rgbaObjectToHslaObject } from "./colorHelpers/rgbaObjectToHslaObject";
+import { rgbaObjectToHexaString } from "./colorHelpers/rgbaObjectToHexaString";
+import SwitchColoreMode from "./SwitchColoreMode";
+import InputHex from "./InputHex";
+import InputColorChannelsSet from "./InputColorChannelsSet";
 
 interface ColorControllerProps {
   name: string;
-  inputColor: string;
-  colorDataType: ColorModeType;
+  initialColorData: OutputColorData;
+  initialColorModel: ColorModeType;
   targetID: string;
-  outputColor: (outputColor: OutputColorData) => void;
+  outputColor: (outputColor: ObjectRgba) => void;
 }
-
-type InputList = {
-  id: number;
-  name: string;
-  min: number;
-  max: number;
-  color: string;
-}[];
-
-const inputsList = [
-  { id: 0, name: "r", min: 0, max: 255, color: "rgb" },
-  { id: 1, name: "g", min: 0, max: 255, color: "rgb" },
-  { id: 2, name: "b", min: 0, max: 255, color: "rgb" },
-  { id: 3, name: "h", min: 0, max: 359, color: "hsl" },
-  { id: 4, name: "s", min: 0, max: 100, color: "hsl" },
-  { id: 5, name: "l", min: 0, max: 100, color: "hsl" },
-  { id: 6, name: "a", min: 0, max: 100, color: "a" },
-];
 
 const ColorController = ({
   name,
-  inputColor,
+  initialColorData,
+  initialColorModel,
   targetID,
   outputColor,
-  colorDataType = "rgba",
 }: ColorControllerProps) => {
   const [r, setR] = useState(0);
   const [g, setG] = useState(0);
@@ -49,53 +36,61 @@ const ColorController = ({
   const [s, setS] = useState(100);
   const [l, setL] = useState(0);
   const [a, setA] = useState(100);
-  const [hex, setHEX] = useState("000000");
+  const [hex, setHEX] = useState("000000FF");
 
-  useEffect(() => {
-    if (inputColor === "white") {
-      setR(255);
-      setG(255);
-      setB(255);
-      setS(100);
-      setL(100);
-      setHEX("ffffff");
-    }
+  const [colorDataType, setColorDataType] = useState<ColorModeType>("rgba");
+
+  useLayoutEffect(() => {
+    // inputToAllColorsChannels(inputColor);
   }, []);
 
   useEffect(() => {
-    colorDataType === "rgba" &&
-      outputColor(`rgba(${r}, ${g}, ${b}, ${a / 100})`);
+    const rgba = { r: r, g: g, b: b, a: a };
+    inputToAllColorsChannels(rgba);
+    outputColor(rgba);
   }, [r, g, b, a]);
 
   useEffect(() => {
-    colorDataType === "hsla" &&
-      outputColor(`hsl(${h}, ${s}%, ${l}%, ${a / 100})`);
+    const rgba = otherColorsToObjectRGBA<ObjectHsla>(
+      { h: h, s: s, l: l, a: a },
+      "hsla"
+    );
+    inputToAllColorsChannels(rgba);
+    outputColor(rgba);
   }, [h, s, l, a]);
 
-  useEffect(() => {
-    colorDataType === "hexa" &&
-      outputColor(`#${hex.toUpperCase()}${alphaToHex(a)}`);
-  }, [hex, a]);
-
-  const alphaToHex = (a: number) => {
-    const intValue = Math.round((a / 100) * 255);
-    const hexValue = intValue.toString(16);
-    return hexValue.padStart(2, "0");
+  const inputToAllColorsChannels = <T extends object>(
+    objectRGBA: ObjectRgba
+  ): void => {
+    const hsla = rgbaObjectToHslaObject(objectRGBA);
+    const hexa = rgbaObjectToHexaString(objectRGBA);
+    if (colorDataType !== "rgba") {
+      setR(objectRGBA.r);
+      setG(objectRGBA.g);
+      setB(objectRGBA.b);
+    }
+    setH(hsla.h);
+    setS(hsla.s);
+    setL(hsla.l);
+    setA(objectRGBA.a);
+    setHEX(hexa);
   };
 
   const handleInput = (e: FormEvent<HTMLInputElement>) => {
     if (e.currentTarget)
-      eval(`set${e.currentTarget.name.toUpperCase()}`)(e.currentTarget.value);
+      eval(`set${e.currentTarget.name.toUpperCase()}`)(
+        Math.round(Number(e.currentTarget.value))
+      );
   };
 
-  const inputGenerator = (inputOption: string) => {
+  const inputGenerator = (inputSetType: string) => {
     let inputsFilteredList: InputList = [];
 
-    if (inputOption === "rgba") {
+    if (inputSetType === "rgba") {
       inputsFilteredList = inputsList.filter(
         (inp) => inp.color === "rgb" || inp.color === "a"
       );
-    } else if (inputOption === "hsla") {
+    } else if (inputSetType === "hsla") {
       inputsFilteredList = inputsList.filter(
         (inp) => inp.color === "hsl" || inp.color === "a"
       );
@@ -103,69 +98,53 @@ const ColorController = ({
 
     if (inputsFilteredList)
       return inputsFilteredList.map((inp, index) => (
-        <label key={inp.id} htmlFor={inp.name}>
-          {inp.name.toUpperCase()}
-          <input
-            type="range"
-            name={inp.name}
-            min={inp.min}
-            max={inp.max}
-            onChange={(e) => handleInput(e)}
-            value={eval(inp.name)}
-          />
-          <input
-            type="number"
-            name={inp.name}
-            min={inp.min}
-            max={inp.max}
-            onChange={(e) => handleInput(e)}
-            value={eval(inp.name)}
-          />
-        </label>
+        <InputColorChannelsSet
+          key={inp.id + targetID + name}
+          id={inp.id + index}
+          name={inp.name}
+          min={inp.min}
+          max={inp.max}
+          onChange={(e) => handleInput(e)}
+          value={eval(inp.name)}
+        />
       ));
   };
 
   return (
     <>
       <div className="color-controller">
-        <div className="color-controller-title">{name}</div>
-        {colorDataType === "rgba" && <>{inputGenerator("rgba")}</>}
+        <fieldset className="color-controller-title">
+          <legend className="color-controller-legend">{name}</legend>
+          {colorDataType === "rgba" && <>{inputGenerator("rgba")}</>}
 
-        {colorDataType === "hsla" && <>{inputGenerator("hsla")}</>}
+          {colorDataType === "hsla" && <>{inputGenerator("hsla")}</>}
 
-        {colorDataType === "hexa" && (
-          <>
-            <label htmlFor="hex">
-              #
-              <input
-                type="text"
-                name="hex"
-                minLength={6}
-                maxLength={6}
-                onChange={(e) => handleInput(e)}
-                value={hex}
+          {colorDataType === "hexa" && (
+            <>
+              <InputHex
+                input={hex}
+                output={(rgba) => {
+                  inputToAllColorsChannels(rgba);
+                  outputColor(rgba);
+                }}
               />
-            </label>
-            <label htmlFor="a">
-              A
-              <input
-                type="range"
+              <InputColorChannelsSet
+                id="a-hex"
                 name="a"
                 min={0}
                 max={100}
                 onChange={(e) => handleInput(e)}
                 value={a}
               />
-              <input
-                type="number"
-                min={0}
-                max={100}
-                onChange={(e) => handleInput(e)}
-                value={a}
-              />
-            </label>
-          </>
-        )}
+            </>
+          )}
+          <SwitchColoreMode
+            targetID={targetID}
+            targetName={name}
+            actualColorDataType={colorDataType}
+            outputData={(type) => setColorDataType(type)}
+          />
+        </fieldset>
       </div>
     </>
   );
