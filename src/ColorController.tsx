@@ -4,7 +4,6 @@ import {
   InputList,
   inputsList,
   otherColorsToObjectRGBA,
-  OutputColorData,
 } from "./appLibrary";
 import "./styles/ColorController.css";
 import { ObjectHsla, ObjectRgba } from "./colorHelpers/colorObjectsInterfaces";
@@ -16,7 +15,7 @@ import InputColorChannelsSet from "./InputColorChannelsSet";
 
 interface ColorControllerProps {
   name: string;
-  initialColorData: OutputColorData;
+  initialColorData: ObjectRgba;
   initialColorModel: ColorModeType;
   targetID: string;
   outputColor: (outputColor: ObjectRgba) => void;
@@ -41,7 +40,12 @@ const ColorController = ({
   const [colorDataType, setColorDataType] = useState<ColorModeType>("rgba");
 
   useLayoutEffect(() => {
-    // inputToAllColorsChannels(inputColor);
+
+    if (initialColorData) {
+       setR(initialColorData.r);
+       setG(initialColorData.g);
+       setB(initialColorData.b);
+    }
   }, []);
 
   useEffect(() => {

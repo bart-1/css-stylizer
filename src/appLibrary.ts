@@ -18,14 +18,13 @@ export type InputList = {
 export type ColorModeType = "rgba" | "hsla" | "hexa";
 export type OutputColorData = ObjectHexa | ObjectHsla | ObjectRgba | string;
 
-export type ColorControllerData = {r: number, g: number, b:number, h:number, s: number, l:number, a:number, hex: string}
-
 export type CSSTargets = "color" | "background-color";
+
 export type SamplesSetup = {
   id: number;
   CSSTargets: CSSTargets[];
   colorModel: ColorModeType;
-  initialValues: { [key: string]: OutputColorData };
+  initialValues: { [key: string]: ObjectRgba };
 };
 
 export type ControllerDataPack = {
@@ -49,8 +48,8 @@ export const samplesSetup: SamplesSetup[] = [
     CSSTargets: ["color", "background-color"],
     colorModel: "hsla",
     initialValues: {
-      color: { h: 0, s: 0, l: 0, a: 100 },
-      background: { h: 0, s: 0, l: 100, a: 100 },
+      color: { r: 0, g: 0, b: 0, a: 100 },
+      background: { r: 255, g: 255, b: 255, a: 100 },
     },
   },
   {
@@ -58,8 +57,8 @@ export const samplesSetup: SamplesSetup[] = [
     CSSTargets: ["color", "background-color"],
     colorModel: "hexa",
     initialValues: {
-      color: "000000FF",
-      background: "FFFFFFFF",
+      color: { r: 0, g: 0, b: 0, a: 100 },
+      background: { r: 255, g: 255, b: 255, a: 100 },
     },
   },
 ];

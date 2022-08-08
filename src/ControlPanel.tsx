@@ -25,7 +25,7 @@ interface ControllPanelProps {
   sampleID: string;
   colorModel: ColorModeType;
   CSSTargets: string[];
-  initialColorData: { [key: string]: OutputColorData };
+  initialColorData: { [key: string]: ObjectRgba };
 }
 
 const ControlPanel = ({
@@ -61,7 +61,7 @@ const ControlPanel = ({
       key={target + sampleID}
       targetID={sampleID}
       name={target}
-      initialColorData={target === 'color' && initialColorData.color || target === 'background-color' && initialColorData.background || '00000000FF'}
+      initialColorData={target === 'color' && initialColorData.color || target === 'background-color' && initialColorData.background || {r:0, g:0, b:0, a:0}}
       outputColor={(outputColor) => {
         handleOutput(outputColor, target, sampleID)
       }}
