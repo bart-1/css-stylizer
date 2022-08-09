@@ -3,10 +3,16 @@ import {
   ColorModeType,
   InputList,
   inputsList,
+  isOfConcreteObjectType,
+  isOfUnionType,
   otherColorsToObjectRGBA,
 } from "./appLibrary";
 import "./styles/ColorController.css";
-import { ObjectHsla, ObjectRgba } from "./colorHelpers/colorObjectsInterfaces";
+import {
+  ObjectHexa,
+  ObjectHsla,
+  ObjectRgba,
+} from "./colorHelpers/colorObjectsInterfaces";
 import { rgbaObjectToHslaObject } from "./colorHelpers/rgbaObjectToHslaObject";
 import { rgbaObjectToHexaString } from "./colorHelpers/rgbaObjectToHexaString";
 import SwitchColoreMode from "./SwitchColoreMode";
@@ -15,7 +21,7 @@ import InputColorChannelsSet from "./InputColorChannelsSet";
 
 interface ColorControllerProps {
   name: string;
-  initialColorData: ObjectRgba;
+  initialColorValues?: ObjectRgba | ObjectHsla | ObjectHexa;
   initialColorModel: ColorModeType;
   targetID: string;
   outputColor: (outputColor: ObjectRgba) => void;
@@ -23,7 +29,7 @@ interface ColorControllerProps {
 
 const ColorController = ({
   name,
-  initialColorData,
+  initialColorValues,
   initialColorModel,
   targetID,
   outputColor,
@@ -35,49 +41,101 @@ const ColorController = ({
   const [s, setS] = useState(100);
   const [l, setL] = useState(0);
   const [a, setA] = useState(100);
-  const [hex, setHEX] = useState("000000FF");
+  const [hex, setHex] = useState("#000000");
 
   const [colorDataType, setColorDataType] = useState<ColorModeType>("rgba");
 
-  useLayoutEffect(() => {
+  const [isReady, setIsReady] = useState(false);
 
-    if (initialColorData) {
-       setR(initialColorData.r);
-       setG(initialColorData.g);
-       setB(initialColorData.b);
+  useLayoutEffect(() => {
+    if (
+      initialColorValues &&
+      isOfConcreteObjectType<ObjectRgba>(initialColorValues, [
+        "r",
+        "g",
+        "b",
+        "a",
+      ])
+    ) {
+      setR(initialColorValues.r);
+      setG(initialColorValues.g);
+      setB(initialColorValues.b);
+      setA(initialColorValues.a);
     }
+    if (
+      initialColorValues &&
+      isOfConcreteObjectType<ObjectHsla>(initialColorValues, [
+        "h",
+        "s",
+        "l",
+        "a",
+      ])
+    ) {
+      setH(initialColorValues.h);
+      setS(initialColorValues.s);
+      setL(initialColorValues.l);
+      setA(initialColorValues.a);
+    }
+    if (
+      initialColorValues &&
+      isOfConcreteObjectType<ObjectHexa>(initialColorValues, ["hex", "a"])
+    ) {
+      setHex(initialColorValues.hex);
+      setA(initialColorValues.a);
+    }
+
+    setColorDataType(initialColorModel);
+    setIsReady(true);
   }, []);
 
   useEffect(() => {
-    const rgba = { r: r, g: g, b: b, a: a };
-    inputToAllColorsChannels(rgba);
-    outputColor(rgba);
+    if (isReady) {
+      const rgba = { r: r, g: g, b: b, a: a };
+      inputToAllColorsChannels(rgba);
+      outputColor(rgba);
+    }
   }, [r, g, b, a]);
 
   useEffect(() => {
-    const rgba = otherColorsToObjectRGBA<ObjectHsla>(
-      { h: h, s: s, l: l, a: a },
-      "hsla"
-    );
-    inputToAllColorsChannels(rgba);
-    outputColor(rgba);
+    if (isReady) {
+      const rgba = otherColorsToObjectRGBA<ObjectHsla>(
+        { h: h, s: s, l: l, a: a },
+        "hsla"
+      );
+      inputToAllColorsChannels(rgba);
+      outputColor(rgba);
+    }
   }, [h, s, l, a]);
+
+  useEffect(() => {
+    if (isReady) {
+      const rgba = otherColorsToObjectRGBA<ObjectHexa>(
+        { hex: hex, a: a },
+        "hexa"
+      );
+      inputToAllColorsChannels(rgba);
+      outputColor(rgba);
+    }
+  }, [hex, a]);
 
   const inputToAllColorsChannels = <T extends object>(
     objectRGBA: ObjectRgba
   ): void => {
-    const hsla = rgbaObjectToHslaObject(objectRGBA);
-    const hexa = rgbaObjectToHexaString(objectRGBA);
+    const hsla = rgbaObjectToHslaObject(objectRGBA),
+      hexa = rgbaObjectToHexaString(objectRGBA);
     if (colorDataType !== "rgba") {
       setR(objectRGBA.r);
       setG(objectRGBA.g);
       setB(objectRGBA.b);
     }
-    setH(hsla.h);
-    setS(hsla.s);
-    setL(hsla.l);
+    if (colorDataType !== "hsla") {
+      setH(hsla.h);
+      setS(hsla.s);
+      setL(hsla.l);
+    }
     setA(objectRGBA.a);
-    setHEX(hexa);
+
+    if (colorDataType !== "hexa") setHex(hexa);
   };
 
   const handleInput = (e: FormEvent<HTMLInputElement>) => {
@@ -127,9 +185,9 @@ const ColorController = ({
             <>
               <InputHex
                 input={hex}
-                output={(rgba) => {
-                  inputToAllColorsChannels(rgba);
-                  outputColor(rgba);
+                inputA={a}
+                output={(hex) => {
+                  setHex(hex);
                 }}
               />
               <InputColorChannelsSet
@@ -143,6 +201,7 @@ const ColorController = ({
             </>
           )}
           <SwitchColoreMode
+            key={targetID + name}
             targetID={targetID}
             targetName={name}
             actualColorDataType={colorDataType}

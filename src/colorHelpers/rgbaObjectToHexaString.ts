@@ -12,7 +12,5 @@ export function rgbaObjectToHexaString(colorRgba: ObjectRgba): string {
         return n.toString(16).padStart(2, "0").toUpperCase();
     }
 
-    return `#${prepareHex(r)}${prepareHex(g)}${prepareHex(b)}${prepareHex(
-        Math.round((a * 255) / 100)
-    )}`;
+    return `#${prepareHex(r)}${prepareHex(g)}${prepareHex(b)}`;
 }

@@ -14,7 +14,7 @@ function App() {
         sampleID={`sample${sample.id}`}
         colorModel={sample.colorModel}
         CSSTargets={sample.CSSTargets}
-        initialColorData={sample.initialValues}
+        initialColorValues={sample.initialColorValues}
       />
     </div>
   ));

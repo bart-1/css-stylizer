@@ -13,6 +13,7 @@ export interface ObjectRgba {
 }
 
 export interface ObjectHexa {
-  hexa: string;
+  hex: string;
+  a: number;
  
 }

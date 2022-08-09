@@ -1,29 +1,26 @@
 import react, { FormEvent, useEffect, useState } from "react";
-import { otherColorsToObjectRGBA } from "./appLibrary";
-import { ObjectHexa, ObjectRgba } from "./colorHelpers/colorObjectsInterfaces";
+import { alphaToHex } from "./appLibrary";
 
 interface InputHexProps {
-  output: (rgba:ObjectRgba) => void;
+  output: (hex: string) => void;
   input: string;
+  inputA: number;
 }
 
-const InputHex = ({ input, output }: InputHexProps) => {
+const InputHex = ({ input, inputA, output }: InputHexProps) => {
+  const [hex, setHex] = useState("000000");
+  useEffect(() => {
+    setHex(input);
+  }, [input]);
 
-    const [hex, setHex] = useState("000000FF");
-    useEffect( () => {
-        setHex(input)
-         
-    }, [input] );
+  const handleHexInput = (e: FormEvent<HTMLInputElement>) => {
+    if (e.currentTarget) setHex(String(e.currentTarget.value));
+  };
 
-     const handleHexInput = (e: FormEvent<HTMLInputElement>) => {
-       if (e.currentTarget) setHex(String(e.currentTarget.value));
-     };
-
-     const handleHexSubmit = (e: FormEvent<HTMLFormElement>) => {
-       e.preventDefault();
-       const rgba = otherColorsToObjectRGBA<ObjectHexa>({ hexa: hex }, "hexa");
-       output(rgba);
-     };
+  const handleHexSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    output(hex);
+  };
   return (
     <>
       <form onSubmit={(e) => handleHexSubmit(e)}>
@@ -35,7 +32,7 @@ const InputHex = ({ input, output }: InputHexProps) => {
             minLength={1}
             maxLength={9}
             onChange={(e) => handleHexInput(e)}
-            value={hex}
+            value={hex + alphaToHex(inputA).toUpperCase()}
           />
           <button type="submit">OK</button>
         </label>

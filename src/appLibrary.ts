@@ -3,7 +3,7 @@ import {
   ObjectHsla,
   ObjectRgba,
 } from "./colorHelpers/colorObjectsInterfaces";
-import { hexaStringToRgbaObject } from "./colorHelpers/hexaStringToRgbaObject";
+import { hexaObjectToRgbaObject } from "./colorHelpers/hexaObjectToRgbaObject";
 import { hslaObjectToRgbaObject } from "./colorHelpers/hslaObjectToRgbaObject";
 
 /**types & interfaces */
@@ -24,7 +24,7 @@ export type SamplesSetup = {
   id: number;
   CSSTargets: CSSTargets[];
   colorModel: ColorModeType;
-  initialValues: { [key: string]: ObjectRgba };
+  initialColorValues: { [key: string]: ObjectRgba | ObjectHsla | ObjectHexa };
 };
 
 export type ControllerDataPack = {
@@ -38,7 +38,7 @@ export const samplesSetup: SamplesSetup[] = [
     id: 1,
     CSSTargets: ["color", "background-color"],
     colorModel: "rgba",
-    initialValues: {
+    initialColorValues: {
       color: { r: 0, g: 0, b: 0, a: 100 },
       background: { r: 255, g: 255, b: 255, a: 100 },
     },
@@ -47,18 +47,18 @@ export const samplesSetup: SamplesSetup[] = [
     id: 2,
     CSSTargets: ["color", "background-color"],
     colorModel: "hsla",
-    initialValues: {
-      color: { r: 0, g: 0, b: 0, a: 100 },
-      background: { r: 255, g: 255, b: 255, a: 100 },
+    initialColorValues: {
+      color: { h: 0, s: 0, l: 0, a: 100 },
+      background: { h: 0, s: 0, l: 100, a: 100 },
     },
   },
   {
     id: 3,
     CSSTargets: ["color", "background-color"],
     colorModel: "hexa",
-    initialValues: {
-      color: { r: 0, g: 0, b: 0, a: 100 },
-      background: { r: 255, g: 255, b: 255, a: 100 },
+    initialColorValues: {
+      color: {  hex: "#000000", a:100 },
+      background: { hex: "#FFFFFF", a:100 },
     },
   },
 ];
@@ -108,6 +108,15 @@ export function isOfUnionType<T extends string>(
   if (unionArray.includes(value)) return true;
   else return false;
 }
+export function isOfConcreteObjectType<T extends object>(
+  object: object,
+  keysArray: string[]
+): object is T {
+  const test = Object.keys(object).filter((key) => keysArray.includes(key));
+
+  if (keysArray.length === test.length) return true;
+  else return false;
+}
 
 export const otherColorsToObjectRGBA = <T extends object>(
   input: T,
@@ -121,8 +130,8 @@ export const otherColorsToObjectRGBA = <T extends object>(
       if (isProperObjectType<ObjectHsla>(input, ["h", "s", "l", "a"]))
         return hslaObjectToRgbaObject(input);
     case actualColorDataType === "hexa":
-      if (isProperObjectType<ObjectHexa>(input, ["hexa"]))
-        return hexaStringToRgbaObject(String(input.hexa));
+      if (isProperObjectType<ObjectHexa>(input, ["hex", "a"]))
+        return hexaObjectToRgbaObject(input);
     default:
       return { r: 0, g: 0, b: 0, a: 100 };
   }

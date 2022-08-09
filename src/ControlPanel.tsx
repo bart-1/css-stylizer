@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import ColorController from "./ColorController";
 import {
+  ObjectHexa,
+  ObjectHsla,
   ObjectRgba,
 } from "./colorHelpers/colorObjectsInterfaces";
 import {
@@ -8,7 +10,6 @@ import {
   ControllerDataPack,
   cssUpdate,
   initialControllerDataPack,
-  OutputColorData,
 } from "./appLibrary";
 import "./styles/ControlPanel.css";
 
@@ -25,21 +26,19 @@ interface ControllPanelProps {
   sampleID: string;
   colorModel: ColorModeType;
   CSSTargets: string[];
-  initialColorData: { [key: string]: ObjectRgba };
+  initialColorValues: { [key: string]: ObjectRgba | ObjectHsla | ObjectHexa };
 }
 
 const ControlPanel = ({
   sampleID,
   colorModel,
   CSSTargets,
-  initialColorData,
+  initialColorValues,
 }: ControllPanelProps) => {
   const [controllerDataPack, setControllerDataPack] = useState<
     ControllerDataPack[]
     >(initialControllerDataPack);
   
- const [colorOutput, setColorOutput] = useState({r:0, g:0, b:0, a:100});
-
   
   const handleOutput = (outputColor: ObjectRgba, target: string, sampleID: string) => {
     const isTarget = controllerDataPack.map((element) => {
@@ -61,7 +60,7 @@ const ControlPanel = ({
       key={target + sampleID}
       targetID={sampleID}
       name={target}
-      initialColorData={target === 'color' && initialColorData.color || target === 'background-color' && initialColorData.background || {r:0, g:0, b:0, a:0}}
+      initialColorValues={target === 'color' && initialColorValues.color || target === 'background-color' && initialColorValues.background || undefined}
       outputColor={(outputColor) => {
         handleOutput(outputColor, target, sampleID)
       }}

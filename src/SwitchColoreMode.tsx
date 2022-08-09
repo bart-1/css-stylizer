@@ -17,38 +17,44 @@ const SwitchColoreMode = ({targetID, targetName, actualColorDataType, outputData
      };
 
   return (
-    <fieldset>
+    <>
+      <fieldset>
+        <label>
+          RGB-A
+          <input
+            type="radio"
+            name={`rgba${targetID + targetName}`}
+            value="rgba"
+            onChange={(e: ChangeEvent<HTMLInputElement>) => handleRadioButtons(e)}
+            checked={actualColorDataType === "rgba"}
+          />
+        </label>
+      </fieldset>
+        <fieldset>
       <label>
-        RGB-A
-        <input
-          type="radio"
-          name={`rgba${targetID + targetName}`}
-          value="rgba"
-          onChange={(e: ChangeEvent<HTMLInputElement>) => handleRadioButtons(e)}
-          checked={actualColorDataType === "rgba"}
-        />
-      </label>
-      <label>
-        HSL-A
-        <input
-          type="radio"
-          name={`hsla${targetID + targetName}`}
-          value="hsla"
-          onChange={(e: ChangeEvent<HTMLInputElement>) => handleRadioButtons(e)}
-          checked={actualColorDataType === "hsla"}
-        />
-      </label>
-      <label>
-        HEX-A
-        <input
-          type="radio"
-          name={`hexa${targetID + targetName}`}
-          value="hexa"
-          onChange={(e: ChangeEvent<HTMLInputElement>) => handleRadioButtons(e)}
-          checked={actualColorDataType === "hexa"}
-        />
-      </label>
-    </fieldset>
+          HSL-A
+          <input
+            type="radio"
+            name={`hsla${targetID + targetName}`}
+            value="hsla"
+            onChange={(e: ChangeEvent<HTMLInputElement>) => handleRadioButtons(e)}
+            checked={actualColorDataType === "hsla"}
+          />
+                </label>
+        </fieldset>
+      <fieldset>
+        <label>
+          HEX-A
+          <input
+            type="radio"
+            name={`hexa${targetID + targetName}`}
+            value="hexa"
+            onChange={(e: ChangeEvent<HTMLInputElement>) => handleRadioButtons(e)}
+            checked={actualColorDataType === "hexa"}
+          />
+        </label>
+      </fieldset>
+    </>
   );
 };
 
