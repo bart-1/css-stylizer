@@ -1,9 +1,7 @@
 # CSS Stylizer
 
 ![image](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E) ![image](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![image](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)![image](	https://img.shields.io/badge/CSS-239120?&style=for-the-badge&logo=css3&logoColor=white)
-
- 
+![image](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)![image](https://img.shields.io/badge/CSS-239120?&style=for-the-badge&logo=css3&logoColor=white)
 
 ## About
 
@@ -13,7 +11,7 @@ You can check 3 samples separatly.
 
 ## Usage
 
-You can easly increase number of samples in code by adding element to object array named samplesSetup
+You can easly increase number of samples in code by adding element to object array named samplesSetup in appLibrary.ts
 
 ```javascript
 const samplesSetup: SamplesSetup[] = [
