@@ -9,6 +9,10 @@ Is for checking colour of text and background with functional notations like RGB
 You can compare and switch notations for choosed color.
 You can check 3 samples separatly.
 
+## Demo
+
+[link](https://dziwnykot.pl/css-stylizer)
+
 ## Usage
 
 You can easly increase number of samples in code by adding element to object array named samplesSetup in appLibrary.ts
