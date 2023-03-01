@@ -30,7 +30,7 @@ fieldset.color-controller-fieldset {
   margin-bottom: 1vh;
   border-color: rgb(159, 42, 0);
   border-radius: 3%;
-  border-style: solid;
+  border: 1px solid orangered;
 
   
 }
@@ -206,7 +206,7 @@ input[type="range"]::-ms-thumb {
 div.color-mode-switcher {
   margin: auto;
   padding: 5px;
-  width: 4vw;
+  width: 100%;
   text-align: right;
 }
 
