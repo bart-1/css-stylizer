@@ -189,6 +189,9 @@ const ColorController = ({
                 output={(hex) => {
                   setHex(hex);
                 }}
+                outputA={(a) => {
+                  setA(a);
+                }}
               />
               <InputColorChannelsSet
                 id="a-hex"

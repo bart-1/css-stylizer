@@ -24,6 +24,19 @@ div.color-controller-inputs-set{
   font-size: x-small;
   align-items: center;
 }
+div.hex-inputs{
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+  font-size: x-small;
+  align-items: center;
+}
+input.hex {
+  width: 80%;
+}
+input.a-hex {
+  width: 15%;
+}
 
 fieldset.color-controller-fieldset {
   font-size: smaller;
