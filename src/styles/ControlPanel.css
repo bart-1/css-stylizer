@@ -2,19 +2,19 @@ div.control-panel {
   display: flex;
   gap: 5px;
   margin-top: 3vh;
-  background-color: rgb(206, 204, 204);
+  background-color: rgb(20, 20, 20);
   padding: 10px 10px;
   border-radius: 5px;
   width: fit-content;
+  color: rgb(241, 179, 113);
 }
-
 
 @media screen and (max-width: 1400px) {
   div.control-panel {
     display: flex;
     gap: 1vw;
     margin-top: 0;
-    background-color: rgb(206, 204, 204);
+    background-color: rgb(20, 20, 20);
     padding: 5px;
     border-radius: 5px;
   }

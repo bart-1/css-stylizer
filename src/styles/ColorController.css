@@ -1,7 +1,7 @@
 * {
   --range-input-background: none;
-  --range-input-active-track: rgb(46, 46, 46);
-  --range-input-inactive-track: gray;
+  --range-input-active-track: rgb(255, 111, 0);
+  --range-input-inactive-track: rgb(53, 53, 53);
   --range-input-thumb: orangered;
 }
 div.color-controller {
@@ -25,9 +25,14 @@ div.color-controller-inputs-set{
   align-items: center;
 }
 
-div.color-controller-title {
+fieldset.color-controller-fieldset {
   font-size: smaller;
   margin-bottom: 1vh;
+  border-color: rgb(159, 42, 0);
+  border-radius: 3%;
+  border-style: solid;
+
+  
 }
 legend.color-controller-legend {
   font-size: smaller;
@@ -196,4 +201,16 @@ input[type="range"]::-ms-thumb {
   border-radius: 3px;
   background: var(--range-input-thumb);
   cursor: pointer;
+}
+
+div.color-mode-switcher {
+  margin: auto;
+  padding: 5px;
+  width: 4vw;
+  text-align: right;
+}
+
+input[type="radio"] {
+    height: 15px;
+    accent-color: orangered;
 }

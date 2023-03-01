@@ -175,7 +175,7 @@ const ColorController = ({
   return (
     <>
       <div className="color-controller">
-        <fieldset className="color-controller-title">
+        <fieldset className="color-controller-fieldset">
           <legend className="color-controller-legend">{name}</legend>
           {colorDataType === "rgba" && <>{inputGenerator("rgba")}</>}
 
@@ -213,3 +213,4 @@ const ColorController = ({
   );
 };
 export default ColorController;
+
