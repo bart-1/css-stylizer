@@ -8,11 +8,36 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-background: rgb(34,193,195);
-background: linear-gradient(0deg, rgb(0, 125, 136) 0%, rgb(248, 198, 92) 100%);
+  background: rgb(34, 193, 195);
+  background: linear-gradient(
+    0deg,
+    rgb(0, 125, 136) 0%,
+    rgb(248, 198, 92) 100%
+  );
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+@media screen and (max-width: 1400px) {
+  body {
+    height: 160vh;
+  }
+}
+@media screen and (max-width: 800px) {
+  body {
+    height: 200vh;
+  }
+}
+@media screen and (max-width: 700px) {
+  body {
+    height: 210vh;
+  }
+}
+@media screen and (max-width: 550px) {
+  body {
+    height: 230vh;
+  }
 }
