@@ -1,4 +1,4 @@
-import react, { FormEvent, useEffect, useState } from "react";
+import react, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { alphaToHex } from "./appLibrary";
 
 interface InputHexProps {
@@ -9,60 +9,77 @@ interface InputHexProps {
 }
 
 const InputHex = ({ input, inputA, output, outputA }: InputHexProps) => {
-  const [hex, setHex] = useState("000000");
+  const [hex, setHex] = useState("");
   const [hexA, setHexA] = useState(100);
 
   useEffect(() => {
     setHex(input);
-  }, [input]);
-
+    setHexA(inputA);
+  }, []);
   useEffect(() => {
     setHexA(inputA);
   }, [inputA]);
 
-  const handleHexInput = (e: FormEvent<HTMLInputElement>) => {
-    const hexRegex = /[a-fA-F0-9]/gm;
-    const testResult = e.currentTarget.value.match(hexRegex);
-    console.log(testResult)
-    if (e.currentTarget.value && testResult!.length === e.currentTarget.value.length)
-      setHex(String(e.currentTarget.value));
-  };
-  const handleHexAInput = (e: FormEvent<HTMLInputElement>) => {
-    if (e.currentTarget) setHexA(Number(e.currentTarget.value));
+  const handleHexInput = (e: ChangeEvent<HTMLInputElement>) => {
+    const hexRegex = /[#a-fA-F0-9]/gm;
+    let inputValue = e.currentTarget.value;
+
+    switch (true) {
+      case inputValue[0] !== "#":
+        inputValue = "#" + inputValue;
+      case inputValue.length > 7:
+        inputValue = inputValue.slice(0, 7);
+      case inputValue.match(hexRegex)?.length !== inputValue.length:
+        break;
+    
+      default:
+        setHex(inputValue);
+    }
+
+    console.log(inputValue);
   };
 
   const handleHexSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    output(hex);
+
+    if (hex.length < 7) {
+      output(hex.padEnd(7, "0"));
+      setHex((prevState) => prevState.padEnd(7, "0"));
+    } else {
+      output(hex);
+    }
     outputA(hexA);
   };
   return (
     <>
-      <form onSubmit={(e) => handleHexSubmit(e)}>
-        <label htmlFor="hex">
-          #
-          <div className="hex-inputs">
+      <form onSubmit={handleHexSubmit}>
+        <div className="hex-inputs">
+          <div className="hex">
+            <label htmlFor="hex">HEX</label>
             <input
               className="hex"
               type="text"
               name="hex"
-              minLength={1}
-              maxLength={7}
-              onChange={(e) => handleHexInput(e)}
-              value={hex}
+              onChange={handleHexInput}
+              value={hex.toUpperCase()}
             />
+          </div>
+          <div className="a-hex">
+            <label htmlFor="a-hex">A</label>
             <input
+              disabled
               className="a-hex"
               type="text"
               name="hex-a"
               minLength={2}
               maxLength={2}
-              onChange={(e) => handleHexAInput(e)}
               value={alphaToHex(hexA)}
             />
           </div>
-          <button type="submit">OK</button>
-        </label>
+        </div>
+        <button className="input-submit" type="submit">
+          OK
+        </button>
       </form>
     </>
   );
