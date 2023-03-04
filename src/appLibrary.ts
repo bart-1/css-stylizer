@@ -140,7 +140,7 @@ export const otherColorsToObjectRGBA = <T extends object>(
 export const alphaToHex = (a: number) => {
   const intValue = Math.round((a / 100) * 255);
   const hexValue = intValue.toString(16);
-  return hexValue.padStart(2, "0");
+  return hexValue.padStart(2, "0").toUpperCase();
 };
 
 /// CSS update

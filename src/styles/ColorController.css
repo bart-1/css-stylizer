@@ -17,12 +17,61 @@ div.color-controller > label {
   font-size: x-small;
   align-items: center;
 }
-div.color-controller-inputs-set{
+div.color-controller-inputs-set {
   display: flex;
   flex-direction: row;
   gap: 5px;
   font-size: x-small;
   align-items: center;
+}
+div.hex-inputs {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  font-size: x-small;
+  align-items: center;
+}
+div.hex {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+  z-index: 10;
+
+}
+div.a-hex {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  z-index: 20;
+
+}
+input.hex {
+  width: 90%;
+  padding: 0;
+  margin-top: 2px;
+}
+input.a-hex {
+  width: 90%;
+  padding: 0;
+  margin-top: 2px;
+  text-align: center;
+  color: black;
+}
+
+
+button.input-submit {
+  margin-top: 5px;
+  background-color: orangered;
+  color: black;
+  border: 2px solid black;
+  border-radius: 10%;
+}
+button.input-submit:hover {
+  background-color: yellow;
+}
+button.input-submit:active {
+  background-color: black;
+  color: white;
 }
 
 fieldset.color-controller-fieldset {
@@ -31,15 +80,13 @@ fieldset.color-controller-fieldset {
   border-color: rgb(159, 42, 0);
   border-radius: 3%;
   border: 1px solid orangered;
-
-  
 }
 legend.color-controller-legend {
   font-size: smaller;
   margin-bottom: 1vh;
 }
 
-input[name='hex'] {
+input[name="hex"] {
   width: 100%;
   text-align: center;
 }
@@ -55,9 +102,6 @@ input[name='hex'] {
     align-items: center;
   }
 }
-
-
-
 
 /* range input */
 
@@ -111,6 +155,13 @@ input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   margin-top: -5px;
 }
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: yellow;
+}
+input[type="range"]::-webkit-slider-thumb:active {
+  background: yellow;
+}
+
 /* input[type="range"]:focus::-webkit-slider-runnable-track {
   background: var(--range-input-inactive-track);
 } */
@@ -141,6 +192,12 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 3px;
   background: var(--range-input-thumb);
   cursor: pointer;
+}
+input[type="range"]::-moz-range-thumb:hover {
+  background: yellow;
+}
+input[type="range"]::-moz-range-thumb:active {
+  background: yellow;
 }
 
 /**Edge */
@@ -202,6 +259,12 @@ input[type="range"]::-ms-thumb {
   background: var(--range-input-thumb);
   cursor: pointer;
 }
+input[type="range"]::-ms-thumb:hover {
+  background: yellow;
+}
+input[type="range"]::-ms-thumb:active {
+  background: yellow;
+}
 
 div.color-mode-switcher {
   margin: auto;
@@ -211,6 +274,6 @@ div.color-mode-switcher {
 }
 
 input[type="radio"] {
-    height: 15px;
-    accent-color: orangered;
+  height: 15px;
+  accent-color: orangered;
 }
