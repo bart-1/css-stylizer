@@ -2,6 +2,7 @@ import "./styles/App.css";
 import ControlPanel from "./ControlPanel";
 import Sample from "./Sample";
 import { samplesSetup } from "./appLibrary";
+import Footer from "./Footer";
 
 
 
@@ -23,6 +24,7 @@ function App() {
     <>
       <div className="App" id="app">
         <div className="samples">{samplesSet}</div>
+      <Footer />
       </div>
     </>
   );
